@@ -1,13 +1,20 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
+
+console.log(galleryItems);
+// змінні  
 const refs = {
 
  photo : document.querySelector('.gallery__image'),
  gallery : document.querySelector('.gallery'),
 
 }  
+let instance = null;
 
 
+
+
+// розмітка
 const galleryItem = galleryItems.map(item => {
     return (` <div class="gallery__item">
   <a class="gallery__link" href= ${item.original} >
@@ -21,34 +28,33 @@ const galleryItem = galleryItems.map(item => {
 </div>`)
 }).join("");
 
+refs.gallery.insertAdjacentHTML('beforeend', galleryItem);
 
  
 
 
-refs.gallery.insertAdjacentHTML('beforeend', galleryItem);
 
-refs.gallery.addEventListener("click", onPhotoReturnUrl,)
+// functions
 
-
-let instance = null;
-
+// відкриття і поернення лінку
 function onPhotoReturnUrl(e) {
     e.preventDefault()
 
+  const originalPhotoLink = e.target.dataset.source
 
     if (e.target.nodeName !== 'IMG') {
         return
     }   instance = basicLightbox.create(`
-    <img src='${e.target.dataset.source}' width="800" height="600">
+    <img src='${originalPhotoLink}' width="800" height="600">
 `) 
     instance.show()
     
-    console.log(e.target.dataset.source);
+    console.log(originalPhotoLink);
     
 
 }
 
-
+// closing with escape
 const onModalClose = (e) => {
     console.log(e.target);
     if (e.key === 'Escape') {
@@ -57,10 +63,8 @@ const onModalClose = (e) => {
 }
  
 
+
+// listeners
+refs.gallery.addEventListener("click", onPhotoReturnUrl,)
 refs.gallery.addEventListener('keydown', onModalClose)
 
-  
-
-
-
-console.log(galleryItems);
