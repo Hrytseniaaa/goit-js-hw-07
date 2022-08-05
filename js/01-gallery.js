@@ -5,11 +5,13 @@ console.log(galleryItems);
 // змінні  
 const refs = {
 
- photo : document.querySelector('.gallery__image'),
+ 
  gallery : document.querySelector('.gallery'),
 
 }  
-let instance = null;
+let instance = basicLightbox.create(`
+    <img src='' width="800" height="600">
+`) ;
 
 
 
@@ -40,16 +42,14 @@ refs.gallery.insertAdjacentHTML('beforeend', galleryItem);
 function onPhotoReturnUrl(e) {
     e.preventDefault()
 
-  const originalPhotoLink = e.target.dataset.source
 
     if (e.target.nodeName !== 'IMG') {
         return
-    }   instance = basicLightbox.create(`
-    <img src='${originalPhotoLink}' width="800" height="600">
-`) 
+  }
+  instance.element().querySelector('img').src = e.target.dataset.source;
     instance.show()
     
-    console.log(originalPhotoLink);
+    console.log(e.target.dataset.source);
     
 
 }
